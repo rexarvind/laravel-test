@@ -42,6 +42,15 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+        if($request->hasFile('avatar')){
+            $file = $request->file('avatar');
+            $filename = $user->id . '.' . $file->extension();
+            $file->storeAs('avatars', $filename, 'public');
+            $user->update([
+                'avatar' => $filename,
+            ]);
+        }
+
         event(new Registered($user));
 
         Auth::login($user);
