@@ -19,7 +19,7 @@ use Illuminate\Validation\ValidationException;
 */
 
 
-Route::post('/token', function (Request $request) {
+Route::post('/login', function (Request $request) {
     $request->validate([
         'email' => 'required',
         'password' => 'required',
@@ -36,6 +36,10 @@ Route::post('/token', function (Request $request) {
 
     $user->tokens()->where('name', $request->device_name)->delete(); // delete old tokens of current device
     return $user->createToken($request->device_name)->plainTextToken;
+});
+
+Route::middleware('auth:sanctum')->post('/logout', function(){
+    return false;
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
