@@ -24,6 +24,7 @@ class User extends Authenticatable
         'email',
         'password',
         'avatar',
+        'device_name',
     ];
 
     /**
@@ -44,4 +45,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function notes()
+    {
+        return $this->hasMany(Note::class);
+    }
+
 }

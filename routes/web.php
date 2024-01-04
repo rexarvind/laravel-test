@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\NoteController;
 use Illuminate\Support\Facades\Route;
 
 use Laravel\Socialite\Facades\Socialite;
@@ -34,11 +35,11 @@ Route::middleware('guest')->group(function(){
     Route::get('/login/google', function () {
         return Socialite::driver('google')->redirect();
     });
-    Route::get('/login/callback/google', function () {
-        $user = Socialite::driver('google')->user();
-        // $user->token
-        dd($user);
-    });
+    // Route::get('/login/callback/google', function () {
+    //     $user = Socialite::driver('google')->user();
+    //     // $user->token
+    //     dd($user);
+    // });
 });
 
 
@@ -47,5 +48,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::resource('notes', NoteController::class);
 
 require __DIR__.'/auth.php';

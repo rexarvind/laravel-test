@@ -2,14 +2,16 @@
 
 namespace App\Traits;
 
-use Illuminate\Support\Str;
+use Hidehalo\Nanoid\Client;
 
 trait UuidTrait {
     protected static function boot(){
         parent::boot();
         static::creating(function($model){
             if(empty($model->{$model->getKeyName()})){
-                $model->{$model->getKeyName()} = Str::uuid()->toString();
+                $client = new Client();
+                // $model->{$model->getKeyName()} = Str::uuid()->toString();
+                $model->{$model->getKeyName()} = $client->generateId();
             }
         });
     }
