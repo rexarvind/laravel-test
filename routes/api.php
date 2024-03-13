@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\NoteController;
+use App\Http\Controllers\Auth\PasswordResetLinkController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +19,9 @@ use App\Http\Controllers\NoteController;
 */
 
 Route::middleware('guest')->group(function () {
+    Route::post('forgot-password', [PasswordResetLinkController::class, 'storeApi'])->name('api.password.email');
+    Route::post('reset-password', [PasswordResetLinkController::class, 'resetApi'])->name('api.password.reset');
+
     Route::post('/register', [AuthController::class, 'register']);
     Route::post('/login', [AuthController::class, 'login']);
     Route::get('/login/google', [AuthController::class, 'google']);
